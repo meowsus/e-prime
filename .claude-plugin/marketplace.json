@@ -1,0 +1,16 @@
+{
+  "name": "e-prime-skills",
+  "description": "Agent Skills for E-Prime writing",
+  "owner": {
+    "name": "Curt Howard"
+  },
+  "plugins": [
+    {
+      "name": "e-prime",
+      "source": "./",
+      "description": "Drafts, rewrites, and audits prose in E-Prime",
+      "category": "writing",
+      "tags": ["writing", "editing", "e-prime", "prose", "active-voice"]
+    }
+  ]
+}

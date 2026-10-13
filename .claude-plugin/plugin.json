@@ -1,0 +1,17 @@
+{
+  "name": "e-prime",
+  "version": "0.0.1",
+  "description": "Teaches agents to draft, rewrite, and audit prose in E-Prime — English without any form of the verb 'to be'.",
+  "author": {
+    "name": "Curt Howard"
+  },
+  "license": "MIT",
+  "keywords": [
+    "e-prime",
+    "writing",
+    "editing",
+    "prose",
+    "active-voice",
+    "general-semantics"
+  ]
+}

@@ -1,0 +1,33 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Lint SKILL.md frontmatter
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          skill = Path("skills/e-prime/SKILL.md").read_text(encoding="utf-8")
+          match = re.match(r"^---\n(.*?)\n---\n", skill, re.DOTALL)
+          assert match, "SKILL.md must open with YAML frontmatter"
+          fm = match.group(1)
+
+          name = re.search(r"^name:\s*(\S+)$", fm, re.MULTILINE).group(1)
+          desc = re.search(r"^description:\s*(.+)$", fm, re.MULTILINE).group(1)
+
+          assert re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", name)
+          assert name == "e-prime"
+          assert 1 <= len(desc) <= 1024
+          print(f"frontmatter OK: {name} ({len(desc)} chars)")
+          PY
