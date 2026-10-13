@@ -1,0 +1,20 @@
+Island life can be hard; maybe this once, let's go.
+It's raining on the island, and it’s pouring.
+He's gone, and John's book is wet.
+"To be, or not to be" — that's the question, isn't it?
+```
+is_be = "was"
+```
+There are three cats here, and there's a dog.
+Mistakes were made.
+Aren't I clever? Thou art mistaken; 'twas ever thus.
+A human being seeks well-being.
+If I were you, I'd be careful, be kind.
+She's been there since noon, and its tail has been still.
+The meeting is to start at 3, and the report has been finalized.
+He was—is—everywhere at once.
+The its/it's rule trips people: its shell is cracked.
+Visit https://example.com/is_a_test or run `x = "is not"` inline.
+See IS-Architecture.md for the design notes.
+"Whatever you say it is, it is not."
+Let's begin; let it be resolved.

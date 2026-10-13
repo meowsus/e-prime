@@ -8,7 +8,7 @@
     {
       "name": "e-prime",
       "source": "./",
-      "description": "Drafts, rewrites, and audits prose in E-Prime",
+      "description": "Drafts, rewrites, audits, and calibrates prose in E-Prime",
       "category": "writing",
       "tags": ["writing", "editing", "e-prime", "prose", "active-voice"]
     }

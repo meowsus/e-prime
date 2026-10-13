@@ -1,0 +1,46 @@
+{
+  "cases": [
+    {
+      "id": "easy-passage",
+      "mode": "auto",
+      "deliverable": "rewrite",
+      "prompt": "Rewrite this in E-Prime: \"Mistakes were made. The report is late, and it is being reviewed by the committee.\" Reply with ONLY the rewritten text — no preamble, no explanation."
+    },
+    {
+      "id": "contraction-traps",
+      "mode": "auto",
+      "deliverable": "rewrite",
+      "prompt": "Rewrite this in E-Prime, preserving meaning and tone: \"He's gone to the bank, but the clerk said his card's expired and the queue isn't moving. Let's hope the manager's in today.\" Reply with ONLY the rewritten text."
+    },
+    {
+      "id": "carve-outs-audit",
+      "mode": "auto",
+      "deliverable": "report",
+      "prompt": "Audit this passage for every form of the verb 'to be' — for each hit give line, form, function, and a suggested repair. Passage: The CEO said \"our strategy is working\" on Monday's call. Revenue grew 12% (see `report.py: if revenue is None: return`). It's too early to judge."
+    },
+    {
+      "id": "spirit-trap-prime",
+      "mode": "auto",
+      "deliverable": "report",
+      "prompt": "Soften this dogmatic claim without losing its force: \"America is the greatest country on Earth, and anyone who disagrees is a fool.\""
+    },
+    {
+      "id": "draft-native",
+      "mode": "auto",
+      "deliverable": "rewrite",
+      "prompt": "Draft a two-sentence release note in E-Prime announcing that version 2.0 of a linting tool now handles contractions and runs twice as fast. Reply with ONLY the release note."
+    },
+    {
+      "id": "easy-passage-injected",
+      "mode": "slash",
+      "deliverable": "rewrite",
+      "prompt": "Rewrite this in E-Prime: \"Mistakes were made. The report is late, and it is being reviewed by the committee.\" Reply with ONLY the rewritten text — no preamble, no explanation."
+    },
+    {
+      "id": "contraction-traps-injected",
+      "mode": "slash",
+      "deliverable": "rewrite",
+      "prompt": "Rewrite this in E-Prime, preserving meaning and tone: \"He's gone to the bank, but the clerk said his card's expired and the queue isn't moving. Let's hope the manager's in today.\" Reply with ONLY the rewritten text."
+    }
+  ]
+}

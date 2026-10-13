@@ -1,7 +1,7 @@
 {
   "name": "e-prime",
-  "version": "0.0.1",
-  "description": "Teaches agents to draft, rewrite, and audit prose in E-Prime — English without any form of the verb 'to be'.",
+  "version": "0.1.0",
+  "description": "Drafts, rewrites, audits, and calibrates prose in E-Prime — English without any form of the verb 'to be'.",
   "author": {
     "name": "Curt Howard"
   },
