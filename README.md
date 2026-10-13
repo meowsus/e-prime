@@ -92,13 +92,57 @@ fired only when the skill loaded, and the unconsulted audits invented
 their own hit-counting scheme instead of grounding counts in the linter.
 
 | Signal                           | Plain prompt (unconsulted) | Skill loaded (`/skill:e-prime`) |
-| -------------------------------- | -------------------------- | ------------------------------ |
+| -------------------------------- | -------------------------- | ------------------------------- |
 | Consulted the skill              | 0/5                        | 2/2                             |
 | Invoked the linter (self-verify) | 0/5                        | 2/2                             |
 | Rewrite compliance               | 3/3 clean                  | 2/2 clean                       |
 | Contraction-trap disambiguation  | correct                    | correct                         |
 
-Caveats, kept honest: small n, one model, one runtime — directional, not
+### Cross-model sweep (pre-launch)
+
+One model proves little, so a pre-launch sweep scored every other
+Ollama `:cloud` model the harness could drive: `deepseek-v4-pro:cloud`,
+`kimi-k2.6:cloud`, `minimax-m2.7:cloud`, and `minimax-m3:cloud` — seven
+cases, three sessions per case, raw logs in
+`skills/e-prime/evals/results/`.
+
+| Signal                          | deepseek-v4-pro | kimi-k2.6 | minimax-m2.7 | minimax-m3 | glm-5.3\* |
+| ------------------------------- | --------------- | --------- | ------------ | ---------- | --------- |
+| Skill advertised (auto)         | 15/15           | 15/15     | 15/15        | 14/15†     | 5/5       |
+| Skill consulted (auto)          | 10/15           | 14/15     | 9/15         | 12/15      | 0/5       |
+| SKILL.md injected (slash)       | 6/6             | 6/6       | 6/6          | 6/6        | 2/2       |
+| Rewrite compliance              | 14/15           | 15/15     | 15/15        | 15/15      | 5/5       |
+| Self-verify (linter, all runs)  | 5/21            | 15/21     | 1/21         | 9/21       | 2/7       |
+| Verdicts                        | 16/21           | 20/21     | 15/21        | 18/21      | 2/7       |
+
+\* the glm-5.3 column restates the single-run measurements above.
+† one 240 s session produced no events (timeout under the concurrent
+sweep) — infrastructure, not a model verdict; excluding it, 12/14
+consulted.
+
+Three patterns held across model lines:
+
+1. **Prior knowledge travels.** Rewrite compliance on plain prompts ran
+   59/60 lint-clean across the swept models — easy cases prove nothing
+   about the skill, and the harness scores accordingly.
+2. **Activation varies wildly by model.** `kimi-k2.6` consulted the
+   advertised skill on 14/15 plain prompts and invoked the linter
+   unprompted in 15/21 runs; `glm-5.3` never consulted at all;
+   `deepseek-v4-pro` triaged — it opened the skill for audits,
+   softening passes, and the contraction traps, then answered the
+   easiest rewrites from memory.
+3. **The skill helps wherever it loads.** All 24 injected runs passed
+   the linter, across every family tested. The self-verification loop,
+   however, transfers unevenly (15/21 down to 1/21), so treat
+   discipline claims per model.
+
+Not every pulled model runs: pi resolves `--model` against its bundled
+catalog, not against Ollama's pulled manifests. Verify a name with
+`pi --list-models <pattern>` before scoring it — pi 1.2.0 rejected seven
+newer pulls outright.
+
+Caveats, kept honest: small n — three runs per case, five models, four
+families, one runtime — directional, not
 statistical — and the ~50% first-pass figure describes the research
 population, not your model. Compliance effects run wildly
 model-idiosyncratic (see `skills/e-prime/references/llm-notes.md`).
@@ -130,6 +174,7 @@ e-prime/
 │           ├── scenarios.md     # deterministic expectations + scenario bank
 │           ├── cases.json      # machine-readable eval cases
 │           ├── run_evals.py    # activation/compliance harness (pi)
+│           ├── results/        # raw logs from the published benchmark sweeps
 │           └── fixtures/tricky.txt
 ├── README.md
 └── LICENSE

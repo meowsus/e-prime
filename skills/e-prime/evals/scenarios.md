@@ -123,3 +123,42 @@ correctly (`He's gone` kept as *has*, `manager's in` repaired as *is*).
 Compliance effects run wildly model-idiosyncratic (see
 `references/llm-notes.md`), so score the target model before shipping
 claims about it.
+
+## Pre-launch cross-model sweep
+
+Same hookup, `--runs 3`, seven cases per model, raw logs in `results/`:
+
+| Signal                          | deepseek-v4-pro | kimi-k2.6 | minimax-m2.7 | minimax-m3 |
+| ------------------------------- | --------------- | --------- | ------------ | ---------- |
+| Advertised (auto)               | 15/15           | 15/15     | 15/15        | 14/15\*    |
+| Consulted (auto)                | 10/15           | 14/15     | 9/15         | 12/15      |
+| Injected (slash)                | 6/6             | 6/6       | 6/6          | 6/6        |
+| Rewrite compliance              | 14/15           | 15/15     | 15/15        | 15/15      |
+| Self-verify (linter, all runs)  | 5/21            | 15/21     | 1/21         | 9/21       |
+| Verdicts                        | 16/21           | 20/21     | 15/21        | 18/21      |
+
+\* one 240 s timeout under the four-way concurrent sweep produced no
+events, so the harness scored it as a FAIL — infrastructure, not a
+model verdict.
+
+Readings from the sweep:
+
+- Consultation on plain prompts ranged 9/15 to 14/15 — against 0/5
+  for `glm-5.3` above. Description-driven activation behaves
+  model-idiosyncratically, as `references/llm-notes.md` predicts.
+- Unconsulted rewrite compliance ran 59/60 lint-clean; the lone miss
+  — "the committee is reviewing it" — slipped from `deepseek-v4-pro`.
+- The mandatory self-verification loop transferred unevenly: 15/21
+  (`kimi-k2.6`) down to 1/21 (`minimax-m2.7`).
+- All 24 injected runs passed the linter, so the skill helps wherever
+  it loads.
+- The machine score cannot judge spirit. One `minimax-m2.7` softening
+  pass hedged with "America is arguably the greatest country" — a
+  smuggled copula that passes token counting but fails the spirit
+  review; that pass stays manual (see the scoring note above).
+
+Which models can run at all: pi resolves `--model` against its
+bundled catalog, not against Ollama's pulled manifests — verify with
+`pi --list-models <pattern>` first. The pi 1.2.0 catalog resolved
+every model measured here; seven newer pulls resolved nowhere and
+would score as spurious FAILs.
